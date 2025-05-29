@@ -72,5 +72,95 @@ export const courses: Course[] = [
     duration: "5 hours",
     prerequisites: ["HTML", "Basic CSS"],
     instructor: "Alex Turner"
+  },
+  {
+    id: "course-009",
+    title: "AI for Web Developers",
+    shortDescription: "Implement AI capabilities in web applications",
+    fullDescription: "Learn how to integrate AI capabilities into your web applications. This course covers machine learning models, natural language processing APIs, and AI-driven user experiences. You'll build several practical applications including a chatbot and a recommendation system.",
+    duration: "14 hours",
+    prerequisites: ["JavaScript", "API Integration", "Basic Data Structures"],
+    instructor: "Maria Sanchez"
+  },
+  {
+    id: "course-010",
+    title: "GraphQL Architecture",
+    shortDescription: "Build efficient APIs with GraphQL",
+    fullDescription: "Deep dive into GraphQL and learn how to build efficient APIs. This course covers schema design, resolvers, mutations, subscriptions, and authentication. You'll learn best practices for organizing your GraphQL codebase and optimizing performance.",
+    duration: "11 hours",
+    prerequisites: ["REST API Knowledge", "JavaScript", "Node.js"],
+    instructor: "Alex Kim"
+  },
+  {
+    id: "course-011",
+    title: "Cybersecurity Essentials for Developers",
+    shortDescription: "Secure your web applications from attacks",
+    fullDescription: "Learn essential security concepts and best practices for protecting web applications. This course covers common vulnerabilities (XSS, CSRF, SQL injection), secure authentication, authorization patterns, data encryption, and security headers. You'll perform security audits and implement fixes on real applications.",
+    duration: "12 hours",
+    prerequisites: ["Web Development", "Basic Networking"],
+    instructor: "Robert Clarke"
+  },
+  {
+    id: "course-012",
+    title: "Performance Optimization Techniques",
+    shortDescription: "Make your applications lightning fast",
+    fullDescription: "Master performance optimization for web applications. This course covers frontend optimization (bundle size reduction, code splitting, lazy loading), backend optimization (database queries, caching strategies), and network optimization techniques. You'll use performance profiling tools to identify and fix bottlenecks.",
+    duration: "8 hours",
+    prerequisites: ["JavaScript", "Web Development"],
+    instructor: "Leila Wong"
+  },
+  {
+    id: "course-013",
+    title: "Cloud Architecture on AWS",
+    shortDescription: "Design scalable systems on Amazon Web Services",
+    fullDescription: "Learn to architect scalable, fault-tolerant systems on AWS. This course covers key AWS services (EC2, S3, Lambda, DynamoDB), infrastructure as code with CloudFormation, serverless architecture patterns, and microservices deployment. You'll design and deploy a complete application architecture with security best practices.",
+    duration: "16 hours",
+    prerequisites: ["Basic Cloud Knowledge", "JavaScript or Python"],
+    instructor: "Thomas Johnson"
+  },
+  {
+    id: "course-014",
+    title: "Docker and Kubernetes Fundamentals",
+    shortDescription: "Containerize and orchestrate your applications",
+    fullDescription: "Master containerization with Docker and orchestration with Kubernetes. This course covers Docker image creation, container networking, Kubernetes architecture, deployments, services, and persistent storage. You'll build a CI/CD pipeline for containerized applications and manage scaling and updates.",
+    duration: "15 hours",
+    prerequisites: ["Linux Basics", "Command Line", "Web Development"],
+    instructor: "Sophia Martinez"
+  },
+  {
+    id: "course-015",
+    title: "Blockchain Development",
+    shortDescription: "Build applications on blockchain technology",
+    fullDescription: "Dive into blockchain development and smart contract programming. This course covers blockchain fundamentals, Ethereum development, Solidity programming language, web3.js integration, and dApp architecture. You'll build and deploy smart contracts and create a decentralized application with a web interface.",
+    duration: "18 hours",
+    prerequisites: ["JavaScript", "Basic Cryptography Knowledge"],
+    instructor: "Daniel Lee"
+  },
+  {
+    id: "course-016",
+    title: "Accessibility in Web Design",
+    shortDescription: "Create inclusive web experiences for all users",
+    fullDescription: "Learn how to build accessible web applications that work for everyone. This course covers WCAG guidelines, semantic HTML, keyboard navigation, screen reader optimization, and color contrast requirements. You'll audit existing sites for accessibility issues and implement fixes to meet international standards.",
+    duration: "6 hours",
+    prerequisites: ["HTML", "CSS", "JavaScript"],
+    instructor: "Emma Richards"
+  },
+  {
+    id: "course-017",
+    title: "Progressive Web Apps",
+    shortDescription: "Build offline-capable web applications",
+    fullDescription: "Master the development of Progressive Web Apps that work offline and feel like native applications. This course covers service workers, caching strategies, app manifests, push notifications, and background sync. You'll transform an existing web app into a fully-featured PWA with offline support and install capabilities.",
+    duration: "9 hours",
+    prerequisites: ["HTML", "CSS", "JavaScript"],
+    instructor: "Jason Miller"
+  },
+  {
+    id: "course-018",
+    title: "Data Visualization with D3.js",
+    shortDescription: "Create powerful interactive data visualizations",
+    fullDescription: "Learn to create stunning data visualizations using the D3.js library. This course covers SVG basics, scales, axes, transitions, and interactive charts. You'll work with real-world datasets to create dashboards, maps, and complex visualizations that help users understand data patterns and trends.",
+    duration: "10 hours",
+    prerequisites: ["JavaScript", "HTML", "CSS", "Basic Math"],
+    instructor: "Nina Patel"
   }
 ];

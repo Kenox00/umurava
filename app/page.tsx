@@ -1,103 +1,114 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { fetchCourses } from '@/redux/slices/courseSlice';
+import CourseCard from '@/components/CourseCard';
+import SearchBar from '@/components/SearchBar';
+import Loading from '@/components/Loading';
+import ErrorMessage from '@/components/ErrorMessage';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const dispatch = useAppDispatch();
+  const { courses, loading, error, searchQuery } = useAppSelector((state) => state.course);
+  const [categoryFilter, setCategoryFilter] = React.useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
+
+  // Extract unique categories from course titles for filtering
+  const categories = React.useMemo(() => {
+    const allCategories = new Set<string>();
+    courses.forEach(course => {
+      // Extract potential category from title (before "with" or first word)
+      const category = course.title.split(' ')[0];
+      if (category) allCategories.add(category);
+    });
+    return Array.from(allCategories).sort();
+  }, [courses]);
+
+  // Filter courses based on search query and category
+  const filteredCourses = React.useMemo(() => {
+    let filtered = courses;
+    
+    // Apply search filter
+    if (searchQuery) {
+      filtered = filtered.filter(course => 
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        course.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    // Apply category filter
+    if (categoryFilter) {
+      filtered = filtered.filter(course => 
+        course.title.startsWith(categoryFilter)
+      );
+    }
+    
+    return filtered;
+  }, [courses, searchQuery, categoryFilter]);
+
+  return (
+    <main className="bg-slate-100 py-8">
+      <div className="max-w-screen-lg mx-auto px-4">
+        <div className="bg-blue-600 text-white rounded-lg p-6 mb-8 shadow-md">
+          <h1 className="text-3xl font-bold mb-2">Employee Training Portal</h1>
+          <p className="text-blue-100">Browse available courses and enhance your skills</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+        {/* Search Bar */}
+        <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+          <h2 className="text-lg font-medium text-gray-700 mb-2">Find a Course</h2>
+          <SearchBar />
+        </div>
+        
+        {/* Error Message */}
+        {error && (
+          <ErrorMessage message="Error loading courses. Please try again." />
+        )}
+        
+        {/* Loading State */}
+        {loading && <Loading message="Loading courses..." />}
+        
+        {/* Courses Grid */}
+        {!loading && !error && (
+          <>
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-sm text-gray-500">
+                {filteredCourses.length} {filteredCourses.length === 1 ? 'course' : 'courses'} found
+              </p>
+              {searchQuery && (
+                <button
+                  onClick={() => dispatch({ type: 'course/setSearchQuery', payload: '' })}
+                  className="text-sm text-blue-500 hover:underline flex items-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Clear search
+                </button>
+              )}
+            </div>
+            
+            {filteredCourses.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-gray-500 text-lg">No courses match your search criteria.</p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </main>
   );
 }
